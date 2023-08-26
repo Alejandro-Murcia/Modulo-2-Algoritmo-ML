@@ -15,12 +15,11 @@ Se optó por un modelo de regresión logística debido a su eficacia y simplicid
 
 La **Función Sigmoide** es definida como:
 
-$\[\sigma(z) = \frac{1}{1 + e^{-z}}\]$
+$\sigma(z) = \frac{1}{1 + e^{-z}}$
 
 La **Función de Costo Logarítmico** a minimizar es:
 
-$\[J(\theta) = -\frac{1}{m} \sum_{i=1}^{m} [ y^{(i)} \log(h(x^{(i)})) + (1 - y^{(i)}) \log(1 - h(x^{(i)})) ]
-\]$
+$J(\theta) = -\frac{1}{m} \sum_{i=1}^{m} [ y^{(i)} \log(h(x^{(i)})) + (1 - y^{(i)}) \log(1 - h(x^{(i)})) ]$
 
 ### Parámetros del Modelo
 
