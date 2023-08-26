@@ -1,2 +1,1 @@
-# Modulo-2-Algoritmo-ML
-Actividad para Módulo 2 - Alejandro Murcia - A00828513
+# Modulo 2 - Momento de Retroalimentación - Algoritmo Sin Uso de Frameworks
