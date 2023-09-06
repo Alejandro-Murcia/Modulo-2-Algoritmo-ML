@@ -1,72 +1,70 @@
-import csv
-import math
+import numpy as np
+import matplotlib.pyplot as plt
 
-# ---- Comentarios de Elección del Modelo ----
-# Elegí un modelo de regresión logística porque es una técnica bien comprendida y efectiva para 
-# la clasificación binaria. En este caso, queremos clasificar a los pacientes como diabéticos o no diabéticos
-# en función de su edad y niveles de glucosa en sangre.
+# ---- Elección del Modelo ----
+# Elegí la regresión logística como modelo porque estamos tratando un problema de clasificación binaria:
+# clasificar pacientes como diabéticos o no diabéticos. La regresión logística es especialmente adecuada para 
+# este tipo de tareas ya que produce una probabilidad que un dato pertenezca a una categoría, y es capaz 
+# de establecer un límite de decisión entre las categorías.
 
-# ---- Comentarios de Estructura ----
-# La estructura del código sigue un patrón típico de aprendizaje automático: 
-# - Carga de datos
-# - Preprocesamiento
-# - Entrenamiento del modelo
-# - Realización de predicciones
+# ---- Estructura del Código ----
+# El código se divide en funciones principales: 
+# 1. sigmoid_function: Función sigmoide que se utiliza como hipótesis de la regresión logística.
+# 2. log_regression: Donde se lleva a cabo el entrenamiento usando el gradiente descendente.
+# Además, se carga un conjunto de datos, se entrena el modelo y finalmente se realizan y evalúan las predicciones.
 
-# ---- Comentarios de Procedimiento ----
-# Para mejorar el modelo, se implementa la normalización de las características, lo que 
-# generalmente hace que el modelo sea más efectivo y facilita la convergencia durante el entrenamiento.
+# ---- Procedimiento ----
+# El conjunto de datos se carga y se normalizan sus características. El modelo se entrena mediante el algoritmo 
+# de gradiente descendente. Se utiliza la función de costo logarítmico (Negative Log Loss) para evaluar el 
+# rendimiento del modelo durante el entrenamiento. Finalmente, se realiza una predicción y se evalúa la precisión.
 
-# Función para calcular la media y la desviación estándar
-def mean_std(data):
-    mean_x1 = sum(x1 for x1, _, _ in data) / len(data)
-    mean_x2 = sum(x2 for _, x2, _ in data) / len(data)
-    std_x1 = math.sqrt(sum((x1 - mean_x1)**2 for x1, _, _ in data) / len(data))
-    std_x2 = math.sqrt(sum((x2 - mean_x2)**2 for _, x2, _ in data) / len(data))
-    return mean_x1, std_x1, mean_x2, std_x2
+def sigmoid_function(X):
+    return 1 / (1 + np.exp(-X))
 
-# Función sigmoide: esencial para el modelo de regresión logística
-def sigmoid(z):
-    return 1 / (1 + math.exp(-z))
-
-# Función para entrenar la regresión logística
-def train_logistic_regression(data, epochs, lr):
-    w0, w1, w2 = 0.0, 0.0, 0.0
-    mean_x1, std_x1, mean_x2, std_x2 = mean_std(data)
-    data = [( (x1-mean_x1)/std_x1, (x2-mean_x2)/std_x2, y ) for x1, x2, y in data]
+def log_regression(X, y, theta, alpha, epochs):
+    y_ = np.reshape(y, (len(y), 1))
+    N = len(X)
+    avg_loss_list = []
 
     for epoch in range(epochs):
-        for x1, x2, y in data:
-            z = w0 + w1 * x1 + w2 * x2
-            pred = sigmoid(z)
-            error = pred - y
-            w0 = w0 - lr * error
-            w1 = w1 - lr * error * x1
-            w2 = w2 - lr * error * x2
-            
-    return w0, w1, w2, mean_x1, std_x1, mean_x2, std_x2
+        sigmoid_x_theta = sigmoid_function(X.dot(theta))
+        grad = (1/N) * X.T.dot(sigmoid_x_theta - y_)
+        theta = theta - (alpha * grad)
+        
+        hyp = sigmoid_function(X.dot(theta))
+        avg_loss = -np.sum(y_ * np.log(hyp) + (1-y_) * np.log(1-hyp)) / N
 
-# Función para hacer predicciones
-def predict(x1, x2, w0, w1, w2, mean_x1, std_x1, mean_x2, std_x2):
-    x1 = (x1 - mean_x1) / std_x1
-    x2 = (x2 - mean_x2) / std_x2
-    z = w0 + w1 * x1 + w2 * x2
-    pred = sigmoid(z)
-    return "Paciente con Diabetes" if pred >= 0.5 else "Paciente sin Diabetes"
+        if epoch % 10 == 0:
+            print('Epoch: {} | Avg. Loss: {}'.format(epoch, avg_loss))
 
-# Cargar datos desde un archivo CSV
-data = []
-with open("diabetes.csv", "r") as f:
-    reader = csv.reader(f)
-    next(reader)  # Saltar la fila de encabezado
-    for row in reader:
-        if row:  
-            glucose, age, outcome = float(row[1]), float(row[7]), int(row[8])
-            data.append((glucose, age, outcome))
+        avg_loss_list.append(avg_loss)
 
-# Entrenar el modelo de regresión logística
-w0, w1, w2, mean_x1, std_x1, mean_x2, std_x2 = train_logistic_regression(data, epochs=10000, lr=0.01)
+    plt.plot(avg_loss_list)
+    plt.title('Cost function')
+    plt.xlabel('Epochs')
+    plt.ylabel('Cost')
+    plt.show()
 
-# Realizar predicciones y mostrar los resultados
-print(f"Paciente con 130 de glucosa y 60 años de edad: {predict(130.0, 60.0, w0, w1, w2, mean_x1, std_x1, mean_x2, std_x2)}")
-print(f"Paciente con 80 de glucosa y 21 años de edad: {predict(80.0, 21.0, w0, w1, w2, mean_x1, std_x1, mean_x2, std_x2)}")
+    return theta
+
+# Cargando el dataset de diabetes
+data = np.loadtxt('diabetes.csv', delimiter=',', skiprows=1)
+X = data[:, :-1]
+y = data[:, -1]
+X_mean = np.mean(X, axis=0)
+X_std = np.std(X, axis=0)
+X = (X - X_mean) / X_std
+X_with_bias = np.c_[np.ones((len(X), 1)), X]
+theta = np.random.randn(X_with_bias[0].size, 1)
+
+# Entrenando el modelo
+epochs = 10000
+alpha = 1
+best_params = log_regression(X_with_bias, y, theta, alpha, epochs)
+
+# Haciendo predicciones
+predictions = sigmoid_function(X_with_bias.dot(best_params))
+predicted_classes = (predictions >= 0.5).astype(int)
+accuracy = np.mean(predicted_classes == y.reshape(-1, 1))
+
+print(f'Accuracy: {accuracy * 100:.2f}%')
