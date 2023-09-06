@@ -62,7 +62,25 @@ El aprendizaje automático, especialmente en el ámbito de la salud, presenta de
 
 6. **Responsabilidad**: Soy plenamente consciente de la responsabilidad que implica trabajar con datos médicos y predicciones que pueden influir en las decisiones de salud. Mi solución se implementa con un profundo sentido de responsabilidad y ética, garantizando que las predicciones proporcionen valor sin comprometer la integridad o seguridad de los pacientes.
 
-Mi solución en el ámbito de implementación de Machine Learning no sólo cumple con las regulaciones y normativas de la industria sino que también aborda activamente las preocupaciones éticas inherentes al trabajo con datos médicos y predicciones de salud. En mi trabajo trato de mantener la transparencia, privacidad y responsabilidad, no alterando los datos ni buscando que perjudiquen ni beneficien a ningún grupo en particular sobre otro..
+Mi solución en el ámbito de implementación de Machine Learning no sólo cumple con las regulaciones y normativas de la industria sino que también aborda activamente las preocupaciones éticas inherentes al trabajo con datos médicos y predicciones de salud. En mi trabajo trato de mantener la transparencia, privacidad y responsabilidad, no alterando los datos ni buscando que perjudiquen ni beneficien a ningún grupo en particular sobre otro.
+
+## Escenarios de Falta Ética en el Uso de la Herramienta
+
+El mal uso de herramientas de aprendizaje automático, especialmente aquellas que trabajan con datos médicos, puede tener graves consecuencias éticas y legales. A continuación mencionaré algunos de los conflictos éticos o implicaciones maliciosas que podrían darse a los datos y su uso dentro de un modelo predictivo de Machine Learning:
+
+1. **Acceso No Autorizado**: Si los datos se filtraran o fueran accesibles por personas no autorizadas, se podría comprometer la privacidad de los individuos representados en el conjunto de datos. A pesar de que el conjunto de datos "Pima Indians Diabetes Database" no contiene identificadores directos, la combinación de ciertas variables podría llevar a la identificación de individuos, especialmente si se combinan con otros datos.
+
+2. **Uso Malicioso de Predicciones**: Las predicciones generadas por el modelo podrían ser utilizadas con malas intenciones, como la discriminación de individuos basada en su predisposición a tener diabetes. Por ejemplo, las aseguradoras podrían utilizar esta información para negar coberturas o aumentar los pagos o accesos a sus seguros.
+
+3. **Negligencia en la Actualización del Modelo**: Si el modelo no se actualiza regularmente con nuevos datos o investigaciones, podría proporcionar predicciones obsoletas o inexactas, lo que podría llevar a decisiones médicas incorrectas.
+
+4. **Consentimiento Eterno**: Como mencionó Joanna Radin en su conferencia, el concepto de "consentimiento eterno" plantea problemas éticos. Si los datos se usan para propósitos no especificados inicialmente o se comparten con terceros sin el conocimiento del participante, se estaría violando su privacidad y consentimiento[^7].
+
+5. **Sesgo en el Modelo**: Si no se maneja adecuadamente, el modelo podría perpetuar o exacerbar sesgos existentes en los datos. Esto podría resultar en predicciones injustas o discriminatorias hacia ciertos grupos demográficos.
+
+6. **Falta de Transparencia en el Uso**: Si se utiliza la herramienta sin proporcionar una explicación clara a los pacientes o profesionales de la salud sobre cómo funciona y qué predicciones está haciendo, se podría incurrir en una falta de transparencia y ética.
+
+Es fundamental ser consciente de estos escenarios y trabajar activamente para prevenirlos. La ética debe ser una consideración primordial en todas las etapas del desarrollo y uso de herramientas basadas en aprendizaje automático, especialmente cuando se tratan datos médicos y se toman decisiones que pueden afectar la salud y el bienestar de los individuos.
 
 
 ## Referencias
@@ -73,4 +91,5 @@ Mi solución en el ámbito de implementación de Machine Learning no sólo cumpl
 [^4]: California Consumer Privacy Act (CCPA). Office of the Attorney General, State of California Department of Justice. [Enlace](https://oag.ca.gov/privacy/ccpa)
 [^5]: Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP). Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales. [Enlace](https://www.inai.org.mx/vut-web/faces/view/reglamentos/leyes/LFPDPPP.pdf)
 [^6]: Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados. Cámara de Diputados del H. Congreso de la Unión. [Enlace](https://www.diputados.gob.mx/LeyesBiblio/pdf/LGPDPPSO_200121.pdf)
+[^7]: Radin, J. (2016). Diabetes — and Privacy — Meet 'Big Data'. Duke Research Blog. [Enlace](https://researchblog.duke.edu/2016/10/24/diabetes-and-privacy-meet-big-data/)
 
